@@ -22,7 +22,7 @@
 		window.localStorage.setItem('knc-cards', JSON.stringify(cards));
 	}
 
-	const maxSpeed = 40;
+	const maxSpeed = 25;
 	let speed = $state(0);
 	let playing = $state(false);
 	let spinning = $derived(speed > 0 && speed < maxSpeed);
@@ -97,7 +97,7 @@
 </script>
 
 <main
-	class="scroll-smoot flex h-svh snap-y snap-mandatory flex-col items-center gap-8 overflow-y-auto px-6 pb-8"
+	class="scroll-smoot flex h-svh snap-y snap-mandatory flex-col items-center gap-8 overflow-y-auto px-6 pt-8"
 >
 	{#if speed === 0}
 		<button class="fixed top-0 left-0 z-30 cursor-pointer p-4 opacity-0" onclick={resetStorage}>
