@@ -22,7 +22,7 @@
 		window.localStorage.setItem('knc-cards', JSON.stringify(cards));
 	}
 
-	const maxSpeed = 20;
+	const maxSpeed = 30;
 	let speed = $state(0);
 	let playing = $state(false);
 	let spinning = $derived(speed > 0 && speed < maxSpeed);
