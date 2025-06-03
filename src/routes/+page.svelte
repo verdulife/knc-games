@@ -68,6 +68,14 @@
 		if (playing) scrollLoop();
 	}
 
+	function resetStorage() {
+		const check = confirm('¿Quieres resetear la lista de temáticas?');
+		if (!check) return;
+
+		window.localStorage.setItem('knc-cards', JSON.stringify(initials));
+		cards = JSON.parse(window.localStorage.getItem('knc-cards')!);
+	}
+
 	onMount(() => {
 		const rawStorage = window.localStorage.getItem('knc-cards');
 		const main = document.querySelector('main') as HTMLElement;
@@ -92,6 +100,10 @@
 	class="scroll-smoot flex h-svh snap-y snap-mandatory flex-col items-center gap-8 overflow-y-auto px-6 pb-8"
 >
 	{#if speed === 0}
+		<button class="fixed top-0 left-0 z-30 cursor-pointer p-4 opacity-0" onclick={resetStorage}>
+			<Add class="size-6" />
+		</button>
+
 		<button class="fixed top-0 right-0 z-30 cursor-pointer p-4" onclick={addItem}>
 			<Add class="size-6" />
 		</button>
