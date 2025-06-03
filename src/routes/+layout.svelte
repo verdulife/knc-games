@@ -1,5 +1,6 @@
 <script lang="ts">
-	import '../app.css';
+	import "@/assets/fonts/recoleta-alt.css";
+	import '@/app.css';
 
 	let { children } = $props();
 </script>

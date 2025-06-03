@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+
+@theme {
+	--font-sans: 'Recoleta Alt', sans-serif;
+	--color-knc-red: #e5311f;
+	--color-knc-blue: #102133;
+	--color-knc-dark: #060d14;
+}

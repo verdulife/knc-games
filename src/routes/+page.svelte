@@ -2,6 +2,7 @@
 	import type { CardType } from '@/lib/types';
 	import { onMount } from 'svelte';
 	import Add from '@/assets/Add.svelte';
+	import { initials } from '@/lib/initials';
 
 	let cards: CardType[] = $state([]);
 
@@ -71,8 +72,12 @@
 		const rawStorage = window.localStorage.getItem('knc-cards');
 		const main = document.querySelector('main') as HTMLElement;
 
-		if (rawStorage) cards = JSON.parse(rawStorage);
-		else window.localStorage.setItem('knc-cards', JSON.stringify(cards));
+		if (rawStorage) {
+			cards = JSON.parse(rawStorage);
+		} else {
+			window.localStorage.setItem('knc-cards', JSON.stringify(initials));
+			cards = JSON.parse(window.localStorage.getItem('knc-cards')!);
+		}
 
 		setTimeout(() => {
 			main.scrollBy({
@@ -84,19 +89,21 @@
 </script>
 
 <main
-	class="flex h-svh snap-y snap-mandatory flex-col items-center gap-12 overflow-y-auto scroll-smooth bg-black pb-12 text-white"
+	class="scroll-smoot flex h-svh snap-y snap-mandatory flex-col items-center gap-8 overflow-y-auto px-6 pb-8"
 >
-	<button class="fixed top-0 right-0 z-30 cursor-pointer p-4" onclick={addItem}>
-		<Add class="size-8" />
-	</button>
+	{#if speed === 0}
+		<button class="fixed top-0 right-0 z-30 cursor-pointer p-4" onclick={addItem}>
+			<Add class="size-6" />
+		</button>
+	{/if}
 
 	{#if cards.length > 0}
 		{#each cards as card, i}
 			<article
-				class="grid h-32 w-xl shrink-0 origin-right snap-center place-content-center border-2 bg-white text-center text-black select-none"
+				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 origin-right snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
-				<p class="text-6xl font-semibold">
+				<p class="text-3xl font-semibold">
 					{card}
 				</p>
 			</article>
@@ -104,10 +111,10 @@
 
 		{#each cards as card, i}
 			<article
-				class="grid h-32 w-xl shrink-0 origin-right snap-center place-content-center border-2 bg-white text-center text-black select-none"
+				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 origin-right snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
-				<p class="text-6xl font-semibold">
+				<p class="text-3xl font-semibold">
 					{card}
 				</p>
 			</article>
@@ -115,32 +122,37 @@
 
 		{#each cards as card, i}
 			<article
-				class="grid h-32 w-xl shrink-0 origin-right snap-center place-content-center border-2 bg-white text-center text-black select-none"
+				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 origin-right snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
-				<p class="text-6xl font-semibold">
+				<p class="text-3xl font-semibold">
 					{card}
 				</p>
 			</article>
 		{/each}
+
+		<div
+			class="bg-knc-dark/80 pointer-events-none fixed top-0 z-20 h-[calc(50%_-_64px)] w-full opacity-0 transition-opacity"
+			class:opacity-100={speed === 0}
+		></div>
+		<div
+			class="bg-knc-dark/80 pointer-events-none fixed bottom-0 z-20 h-[calc(50%_-_64px)] w-full opacity-0 transition-opacity"
+			class:opacity-100={speed === 0}
+		></div>
+
+		<button
+			class="bg-knc-blue fixed bottom-4 z-30 w-48 cursor-pointer rounded-full px-8 py-4 transition-opacity disabled:opacity-10"
+			disabled={spinning}
+			onclick={toggleRoulette}
+		>
+			{playing ? 'Parar' : 'Girar'}
+		</button>
+	{:else}
+		<div class="mt-48 flex flex-col items-center gap-4 text-center">
+			<h1 class="text-4xl font-semibold">¡No hay temáticas!</h1>
+			<p>Clica en el botón de la esquina superior derecha para añadir una temática.</p>
+		</div>
 	{/if}
-
-	<div
-		class="pointer-events-none fixed top-0 z-20 h-[calc(50%_-_64px)] w-full bg-black/80 opacity-0 transition-opacity"
-		class:opacity-100={speed === 0}
-	></div>
-	<div
-		class="pointer-events-none fixed bottom-0 z-20 h-[calc(50%_-_64px)] w-full bg-black/80 opacity-0 transition-opacity"
-		class:opacity-100={speed === 0}
-	></div>
-
-	<button
-		class="fixed bottom-4 z-30 w-48 cursor-pointer rounded-full bg-blue-400 px-8 py-4 transition-opacity disabled:opacity-10"
-		disabled={spinning}
-		onclick={toggleRoulette}
-	>
-		{playing ? 'Parar' : 'Girar'}
-	</button>
 </main>
 
 <style>
