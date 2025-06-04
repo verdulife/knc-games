@@ -49,9 +49,9 @@
 			speed = speed <= 0 ? 0 : speed - 0.4;
 		}
 
-		if (!playing && speed < 0.8) {
+		if (!playing && speed === 0.8) {
 			main.classList.add('snap-y');
-		} else {
+		} else if (playing && speed > 0) {
 			main.classList.remove('snap-y');
 		}
 
