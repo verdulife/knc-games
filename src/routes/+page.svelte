@@ -44,14 +44,14 @@
 		}
 
 		if (playing) {
-			speed = speed >= maxSpeed ? maxSpeed : speed + 0.2;
+			speed = speed >= maxSpeed ? maxSpeed : speed + 0.4;
 		} else {
 			speed = speed <= 0 ? 0 : speed - 0.4;
 		}
 
-		if (!playing && speed === 0.8) {
+		if (!playing && speed < 0.4) {
 			main.classList.add('snap-y');
-		} else if (playing && speed > 0) {
+		} else {
 			main.classList.remove('snap-y');
 		}
 
@@ -110,10 +110,10 @@
 	{#if cards.length > 0}
 		{#each cards as card, i}
 			<article
-				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 snap-center place-content-center rounded-4xl text-center select-none"
+				class="bg-knc-red grid py-8 w-xl max-w-full shrink-0 snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
-				<p class="text-3xl font-semibold">
+				<p class="text-2xl md:text-3xl font-semibold">
 					{card}
 				</p>
 			</article>
@@ -121,10 +121,10 @@
 
 		{#each cards as card, i}
 			<article
-				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 snap-center place-content-center rounded-4xl text-center select-none"
+				class="bg-knc-red grid py-8 w-xl max-w-full shrink-0 snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
-				<p class="text-3xl font-semibold">
+				<p class="text-2xl md:text-3xl font-semibold">
 					{card}
 				</p>
 			</article>
