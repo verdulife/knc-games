@@ -40,6 +40,7 @@
 		]
 	},
 	"dependencies": {
+		"@vercel/blob": "^1.1.1",
 		"animejs": "^4.0.2"
 	}
 }

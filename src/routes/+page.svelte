@@ -36,12 +36,12 @@
 				top: 0,
 				behavior: 'instant'
 			});
+		} else {
+			main.scrollTo({
+				top: scrollTop + speed,
+				behavior: 'instant'
+			});
 		}
-
-		main.scrollBy({
-			top: speed,
-			behavior: 'instant'
-		});
 
 		if (playing) {
 			speed = speed >= maxSpeed ? maxSpeed : speed + 0.2;
@@ -49,15 +49,13 @@
 			speed = speed <= 0 ? 0 : speed - 0.4;
 		}
 
-		if (!playing && speed === 0) {
+		if (!playing && speed < 0.8) {
 			main.classList.add('snap-y');
-			main.classList.add('scroll-smooth');
-			return;
 		} else {
 			main.classList.remove('snap-y');
-			main.classList.remove('scroll-smooth');
 		}
 
+		if (!playing && speed === 0) return;
 		requestAnimationFrame(scrollLoop);
 
 		console.log({ scrollHeight, scrollTop, speed, playing });
@@ -88,8 +86,8 @@
 		}
 
 		setTimeout(() => {
-			main.scrollBy({
-				top: 10,
+			main.scrollTo({
+				top: 100,
 				behavior: 'smooth'
 			});
 		}, 100);
@@ -97,7 +95,7 @@
 </script>
 
 <main
-	class="scroll-smoot flex h-svh snap-y snap-mandatory flex-col items-center gap-8 overflow-y-auto px-6 pt-8"
+	class="flex h-svh snap-y snap-mandatory flex-col items-center gap-8 overflow-y-auto px-6 pt-8"
 >
 	{#if speed === 0}
 		<button class="fixed top-0 left-0 z-30 cursor-pointer p-4 opacity-0" onclick={resetStorage}>
@@ -112,7 +110,7 @@
 	{#if cards.length > 0}
 		{#each cards as card, i}
 			<article
-				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 origin-right snap-center place-content-center rounded-4xl text-center select-none"
+				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
 				<p class="text-3xl font-semibold">
@@ -123,18 +121,7 @@
 
 		{#each cards as card, i}
 			<article
-				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 origin-right snap-center place-content-center rounded-4xl text-center select-none"
-				ondblclick={() => removeItem(i)}
-			>
-				<p class="text-3xl font-semibold">
-					{card}
-				</p>
-			</article>
-		{/each}
-
-		{#each cards as card, i}
-			<article
-				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 origin-right snap-center place-content-center rounded-4xl text-center select-none"
+				class="bg-knc-red grid h-32 w-xl max-w-full shrink-0 snap-center place-content-center rounded-4xl text-center select-none"
 				ondblclick={() => removeItem(i)}
 			>
 				<p class="text-3xl font-semibold">
